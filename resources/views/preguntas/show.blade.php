@@ -189,7 +189,7 @@
             layout: {
               padding: {
                   left: 150,
-                  right: 0,
+                  right: 100,
                   top: 20,
                   bottom: 0
               }
@@ -197,7 +197,7 @@
             plugins: {
               datalabels: {
                 anchor: 'end',
-                align: 'start',
+                align: 'end',
                 color: 'white',
                 display: false,
                 formatter: function (value) {
