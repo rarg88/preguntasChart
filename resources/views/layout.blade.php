@@ -17,9 +17,33 @@
                 font-family: 'Nunito';
             }
 
-            .bg-green{
+            .bg-green {
               background: rgb(60,128,118);
-              background: linear-gradient(45deg, rgba(60,128,118,1) 40%, rgba(143,183,177,1) 100%);
+              /* background: linear-gradient(45deg, rgba(60,128,118,1) 40%, rgba(143,183,177,1) 100%); */
+            }
+
+            .col-preguntas {
+              flex: 0 0 12%;
+              max-width: 12%;
+            }
+
+            .lh-05{
+              line-height: 0.5;
+            }
+
+            #overlayContainer {
+              position: absolute;
+              left: 125px;
+              top: 65px;
+              overflow: auto;
+              background: rgb(60,128,118);
+              /* background: linear-gradient(45deg, rgba(60,128,118,1) 40%, rgba(143,183,177,1) 100%); */
+            }
+
+            #overlay {
+              opacity: .5;
+              width: 1020px;
+              height: 450px;
             }
         </style>
         <!-- Scripts -->
