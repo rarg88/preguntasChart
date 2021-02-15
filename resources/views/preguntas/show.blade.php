@@ -7,35 +7,59 @@
     <div class="row">
       <div class="chart-container col-12 mb-5">
         <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
+        <div id="overlayContainer">
+          <canvas id="overlay" role="img"></canvas>
+        </div>
       </div>
     </div>
 
     <div class="row">
-    
-      <div class="col-12 py-3">
-        <a href="{{ route('home') }}"><button class="btn btn-info">Home</button></a>
-        <a href="/preguntas/create"><button class="btn btn-info">Pregunta nueva</button></a>
-        <button class="btn btn-info" id="show">Mostrar</button>
-        @if($prev)
-          <a href="/preguntas/{{ $prev->id }}"><button class="btn btn-info"><i class="fal fa-arrow-left"></i> Previous</button></a>
-        @endif
-        @if($next)
-          <a href="/preguntas/{{ $next->id }}"><button class="btn btn-info">Next <i class="fal fa-arrow-right"></i></button></a>
-        @endif
+      <div class="col-12 pb-3">
+        <div class="row align-items-start">
+          <div class="col-3">
+            <a href="{{ route('home') }}" tabindex="-1"><button class="btn btn-info" tabindex="-1"><i class="fal fa-home-heart"></i></button></a>
+            <a href="/preguntas/create" tabindex="-1"><button class="btn btn-info" tabindex="-1"><i class="fal fa-comment-plus"></i></button></a>
+            <button class="btn btn-info" id="show" tabindex="-1"><i class="fal fa-eye"></i></button>
+            @if($prev)
+              <a href="/preguntas/{{ $prev->id }}" tabindex="-1"><button class="btn btn-info" tabindex="-1"><i class="fal fa-arrow-left"></i></button></a>
+            @endif
+            @if($next)
+              <a href="/preguntas/{{ $next->id }}" tabindex="-1"><button class="btn btn-info" tabindex="-1"><i class="fal fa-arrow-right"></i></button></a>  
+            @endif
+          </div>
+          <div class=" col-9 text-white">
+            <form method="post" action="/respuestas" class="px-1 lh-05">
+              @csrf
+              @method('PUT')
+              <div class="form-group row align-items-start">
+                @foreach ($respuestas as $respuesta)
+                <div class="col-preguntas px-2">
+                  <div class="row flex-column">
+                    <div class="col-sm-12">
+                      <input type="number" class="form-control" name="respuesta[{{ $respuesta->id }}]" id="{{ $respuesta->sede->sede }}" value="{{ $respuesta->respuesta }}" min="0" max="100" tabindex="{{ $loop->iteration }}"><br>
+                    </div>
+                    <label for="{{ $respuesta->sede->sede }}" class="col-sm-12 col-form-label text-truncate pt-0">{{ $respuesta->sede->sede }}</label>
+                  </div>
+                </div> 
+                @endforeach
+                <div class="col-preguntas px-2">
+                  <button type="submit" class="btn btn-info" id="sendData" tabindex="-1"><i class="fal fa-paper-plane"></i></button>
+                </div>
+                <input type="hidden" name="pregunta_id" value="{{ $pregunta->id }}">
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
       @isset($update)
-        <div class="col-12 py-3">
-          <div class="alert alert-success alert-dismissible show" role="alert">
-            ¡<strong>Pregunta</strong> actualizada correctamente!
-          </div>
+        <div class="alert alert-success alert-dismissible show col-12 py-3" role="alert">
+          ¡<strong>Pregunta</strong> actualizada correctamente!
         </div>
       @endisset
       @isset(request()->updateRespuestas)
-        <div class="col-12 py-3">
-          <div class="alert alert-success alert-dismissible show" role="alert">
-            ¡<strong>Respuestas</strong> actualizadas correctamente!
-          </div>
+        <div class="alert alert-success alert-dismissible show col-12 py-3" role="alert">
+          ¡<strong>Respuestas</strong> actualizadas correctamente!
         </div>
       @endisset
 
@@ -48,34 +72,11 @@
               <label for="pregunta" class="col-form-label">Pregunta</label>
             </div>
             <div class="col-8">
-              <input type="text" class="form-control" name="pregunta" id="pregunta" value="{{ $pregunta->pregunta }}"><br>
+              <input type="text" class="form-control" name="pregunta" id="pregunta" value="{{ $pregunta->pregunta }}" tabindex="-1"><br>
             </div>
             <div class="col-2">
-              <input type="submit" class="btn btn-info" name="sendQuestion" value="Enviar Pregunta" id="sendQuestion">
+              <input type="submit" class="btn btn-info" name="sendQuestion" value="Enviar Pregunta" id="sendQuestion" tabindex="-1">
             </div>
-          </div>
-        </form>
-      </div>
-
-      <div class="col-12 text-white py-3">
-        <form method="post" action="/respuestas/">
-          @csrf
-          @method('PUT')
-          <div class="form-group row">
-            @foreach ($respuestas as $respuesta)
-            <div class="col-12 col-sm-6">
-              <div class="row">
-                <label for="{{ $respuesta->sede->sede }}" class="col-sm-6 col-form-label">{{ $respuesta->sede->sede }}</label>
-                <div class="col-sm-6">
-                  <input type="number" class="form-control" name="respuesta[{{ $respuesta->id }}]" id="{{ $respuesta->sede->sede }}" value="{{ $respuesta->respuesta }}" min="0" max="100"><br>
-                </div>
-              </div>
-            </div> 
-            @endforeach
-            <div class="col-12 col-sm-6 text-right">
-              <input type="submit" class="btn btn-info" name="sendData" value="Enviar Respuestas" id="sendData">
-            </div>
-            <input type="hidden" name="pregunta_id" value="{{ $pregunta->id }}">
           </div>
         </form>
       </div>
@@ -103,7 +104,14 @@
     const images = ['/img/AMARILLO_SMALL.png', '/img/MARRON_SMALL.png', '/img/AZUL_SMALL.png', '/img/ROJO_SMALL.png', '/img/NARANJA_SMALL.png', '/img/VERDE_SMALL.png', '/img/MORADO_SMALL.png'];
 
     var titulo = "{!! $pregunta->pregunta !!}";
+    var tituloLongitud = titulo.length;
+    var tituloTop = Math.floor(tituloLongitud/80) * 20;
+
+    $("#overlayContainer").css({top : "+=" + tituloTop + 'px'});
+    $("#overlay").css({height : "-=" + tituloTop + 'px'});
+    
     titulo = titulo.match(/.{1,80}/g);
+    
     var config = {
       type: 'horizontalBar',
         plugins: [{
@@ -175,6 +183,9 @@
                     fontColor: 'white',
                 }
             },
+            tooltips: {
+              enabled: false
+            },
             layout: {
               padding: {
                   left: 150,
@@ -187,7 +198,7 @@
               datalabels: {
                 anchor: 'end',
                 align: 'start',
-                color: 'white',
+                color: 'transparent',
                 formatter: function (value) {
                   return value + '%';
                 },
@@ -223,21 +234,25 @@
       myChart = new Chart(ctx, config);
       hidden = hidden ? false : true;
       myChart.options.plugins.datalabels.display = !hidden;
+      myChart.options.plugins.datalabels.color = 'transparent';
       myChart.data.datasets[0].hidden = hidden;
+      $("#overlayContainer").css('left', '125px');
       myChart.update();
-      $('#show').html('Mostrar');
+      $('#show').html('<i class="fal fa-eye"></i>');
       
       if(!hidden){
         myChart.destroy();
         myChart = new Chart(ctx, config);
         myChart.options.plugins.datalabels.display = !hidden;
-        $('#show').html('Esconder');
-        myChart.update({
-          duration: 2000,
-          lazy: false,
-          easing: 'easeOutBounce'
-        });
-
+        $('#show').html('<i class="fal fa-eye-slash"></i>');
+        myChart.update();
+        setTimeout(function(){ 
+          myChart.options.plugins.datalabels.color = 'white'; 
+          myChart.update(0); 
+        }, 8000);
+        $("#overlayContainer").animate({
+          left: '+=1100px'
+        }, 8000);
       }
     });
   </script>
