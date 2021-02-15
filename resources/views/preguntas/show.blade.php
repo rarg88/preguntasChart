@@ -198,7 +198,8 @@
               datalabels: {
                 anchor: 'end',
                 align: 'start',
-                color: 'transparent',
+                color: 'white',
+                display: false,
                 formatter: function (value) {
                   return value + '%';
                 },
@@ -233,8 +234,8 @@
       myChart.destroy();
       myChart = new Chart(ctx, config);
       hidden = hidden ? false : true;
-      myChart.options.plugins.datalabels.display = !hidden;
-      myChart.options.plugins.datalabels.color = 'transparent';
+      myChart.options.plugins.datalabels.display = false;
+      // myChart.options.plugins.datalabels.color = 'transparent';
       myChart.data.datasets[0].hidden = hidden;
       $("#overlayContainer").css('left', '125px');
       myChart.update();
@@ -243,12 +244,12 @@
       if(!hidden){
         myChart.destroy();
         myChart = new Chart(ctx, config);
-        myChart.options.plugins.datalabels.display = !hidden;
+        // myChart.options.plugins.datalabels.display = !hidden;
         $('#show').html('<i class="fal fa-eye-slash"></i>');
         myChart.update();
         setTimeout(function(){ 
-          myChart.options.plugins.datalabels.color = 'white'; 
-          myChart.update(0); 
+          myChart.options.plugins.datalabels.display = !hidden;
+          myChart.update(); 
         }, 8000);
         $("#overlayContainer").animate({
           left: '+=1100px'
