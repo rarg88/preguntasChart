@@ -238,6 +238,7 @@
       // myChart.options.plugins.datalabels.color = 'transparent';
       myChart.data.datasets[0].hidden = hidden;
       $("#overlayContainer").css('left', '125px');
+      $("#overlay").css('width', '1020px');
       myChart.update();
       $('#show').html('<i class="fal fa-eye"></i>');
       
@@ -252,7 +253,10 @@
           myChart.update(); 
         }, 8000);
         $("#overlayContainer").animate({
-          left: '+=1100px'
+          left: '+=1100px',
+        }, 8000);
+        $("#overlay").animate({
+          width: '-=1020px',
         }, 8000);
       }
     });
