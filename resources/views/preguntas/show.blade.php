@@ -123,7 +123,7 @@
               var y = yAxis.getPixelForTick(index);      
               var image = new Image();
               image.src = images[index];
-              ctx.drawImage(image, xAxis.left - 100, y -30);
+              ctx.drawImage(image, xAxis.left - 70, y -30);
             });      
           }
         }],
@@ -188,8 +188,8 @@
             },
             layout: {
               padding: {
-                  left: 150,
-                  right: 100,
+                  left: 100,
+                  right: 120,
                   top: 20,
                   bottom: 0
               }
@@ -201,6 +201,14 @@
                 color: 'white',
                 display: false,
                 formatter: function (value) {
+                  if(value >= 50 && value <=69){
+                    return value + '% (+1)';
+                  }else if(value >= 70 && value <=89){
+                    return value + '% (+2)';
+                  }
+                  else if(value >= 90 && value <=100){
+                    return value + '% (+3)';
+                  }
                   return value + '%';
                 },
                 font: {
