@@ -251,7 +251,7 @@
         setTimeout(function(){ 
           myChart.options.plugins.datalabels.display = !hidden;
           myChart.update(); 
-        }, 8000);
+        }, 6000);
         $("#overlayContainer").animate({
           left: '+=1100px',
         }, 8000);
