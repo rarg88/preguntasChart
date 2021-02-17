@@ -7,6 +7,7 @@
     <div class="row">
       <div class="chart-container col-12 mb-5">
         <canvas id="myChart" aria-label="Hello ARIA World" role="img"></canvas>
+        <div id="legend"></div>
         <div id="overlayContainer">
           <canvas id="overlay" role="img"></canvas>
         </div>
@@ -130,7 +131,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: '%',
+                label: ['1','2'],
                 data: {{ json_encode($data) }},
                 backgroundColor: [
                     'rgba(250, 219, 58, 1)',
@@ -138,7 +139,7 @@
                     'rgba(82, 169, 230, 1)',
                     'rgba(212, 47, 29, 1)',
                     'rgba(227, 139, 34, 1)',
-                    'rgba(91, 189, 75, 1)',
+                    'rgba(75, 131, 87, 1)',
                     'rgba(119, 43, 155, 1)'
                 ],
                 borderColor: [
@@ -147,7 +148,7 @@
                     'rgba(82, 169, 230, 1)',
                     'rgba(212, 47, 29, 1)',
                     'rgba(227, 139, 34, 1)',
-                    'rgba(91, 189, 75, 1)',
+                    'rgba(75, 131, 87, 1)',
                     'rgba(119, 43, 155, 1)'
                 ],
                 borderWidth: 1,
@@ -176,12 +177,19 @@
               fontColor: "white",
               fontSize: 22,
             },
-            legend: {
-                display: false,
-                labels: {
-                    // This more specific font property overrides the global property
-                    fontColor: 'white',
-                }
+            legend: false,
+            legendCallback: function(chart) {
+              var ul = document.createElement('ul');
+              var borderColor = chart.data.datasets[0].borderColor;
+              chart.data.labels.forEach(function(label, index) {
+                  ul.innerHTML += `
+                    <li>
+                        <span style="background-color: ${borderColor[index]}"></span>
+                        ${label}
+                    </li>
+                  `; // ^ ES6 Template String
+              });
+              return ul.outerHTML;
             },
             tooltips: {
               enabled: false
@@ -224,6 +232,7 @@
     var hidden = true;
     var myChart = new Chart(ctx, config);
 
+    legend.innerHTML = myChart.generateLegend();
 
     function addData(chart, label, data) {
       chart.data.datasets.forEach((dataset) => {
