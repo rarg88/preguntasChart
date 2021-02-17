@@ -18,7 +18,7 @@
             }
 
             .bg-green {
-              background: rgb(60,128,118);
+              background: rgb(65, 121, 205);
               /* background: linear-gradient(45deg, rgba(60,128,118,1) 40%, rgba(143,183,177,1) 100%); */
             }
 
@@ -36,7 +36,7 @@
               left: 125px;
               top: 65px;
               overflow: auto;
-              background: rgb(60,128,118);
+              background: rgb(65, 121, 205);
               /* background: linear-gradient(45deg, rgba(60,128,118,1) 40%, rgba(143,183,177,1) 100%); */
             }
 
@@ -44,6 +44,28 @@
               opacity: .5;
               width: 1020px;
               height: 450px;
+            }
+
+            #legend ul {
+                list-style: none;
+                white-space: nowrap;
+                color: white;
+                text-align: center;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            #legend li {
+              display: inline-block;
+              margin-right: 5px;
+              margin-left: 5px;
+            }
+            #legend li span {
+              width: 36px;
+              height: 12px;
+              display: inline-block;
+              margin: 0 0 8px 0;
+              vertical-align: -9.4px;
             }
         </style>
         <!-- Scripts -->
