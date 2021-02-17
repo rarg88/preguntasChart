@@ -102,7 +102,7 @@
     });
 
     const labels = {!! json_encode($sedes) !!}
-    const images = ['/img/AMARILLO_SMALL.png', '/img/MARRON_SMALL.png', '/img/AZUL_SMALL.png', '/img/ROJO_SMALL.png', '/img/NARANJA_SMALL.png', '/img/VERDE_SMALL.png', '/img/MORADO_SMALL.png'];
+    const images = ['/img/AMARILLO_SMALL.png', '/img/MARRON_SMALL.png', '/img/AZUL_SMALL.png', '/img/ROJO_SMALL.png', '/img/NARANJA_SMALL.png', '/img/BLANCO_SMALL.png', '/img/MORADO_SMALL.png'];
 
     var titulo = "{!! $pregunta->pregunta !!}";
     var tituloLongitud = titulo.length;
@@ -139,7 +139,7 @@
                     'rgba(82, 169, 230, 1)',
                     'rgba(212, 47, 29, 1)',
                     'rgba(227, 139, 34, 1)',
-                    'rgba(75, 131, 87, 1)',
+                    'rgba(218, 218, 218, 1)',
                     'rgba(119, 43, 155, 1)'
                 ],
                 borderColor: [
@@ -148,7 +148,7 @@
                     'rgba(82, 169, 230, 1)',
                     'rgba(212, 47, 29, 1)',
                     'rgba(227, 139, 34, 1)',
-                    'rgba(75, 131, 87, 1)',
+                    'rgba(218, 218, 218, 1)',
                     'rgba(119, 43, 155, 1)'
                 ],
                 borderWidth: 1,
